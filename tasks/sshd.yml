@@ -1,6 +1,13 @@
 ---
+- name: SSHD | Ensure specified packages are installed
+  package:
+    name: "{{ ssh_packages }}"
+    state: installed
+  tags:
+    - base
+    - install
 
-- name: Config | Disable reverse DNS lookup for SSH
+- name: SSHD | Disable reverse DNS lookup for SSH
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -13,7 +20,7 @@
     - config
     - sshd
 
-- name: Config | Set protocol version for SSH
+- name: SSHD | Set protocol version for SSH
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -26,7 +33,7 @@
     - config
     - sshd
 
-- name: Config | Set PermitEmptyPasswords
+- name: SSHD | Set PermitEmptyPasswords
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -40,7 +47,21 @@
     - config
     - sshd
 
-- name: Config | Set IgnoreRhosts
+- name: SSHD | Set PasswordAuthentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^PasswordAuthentication'
+    insertafter: '^#PasswordAuthentication'
+    line: "PasswordAuthentication {{ sshd_passwordauthentication }}"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: SSHD | Set IgnoreRhosts
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -54,7 +75,7 @@
     - config
     - sshd
 
-- name: Config | Set HostbasedAuthentication
+- name: SSHD | Set HostbasedAuthentication
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -68,7 +89,7 @@
     - config
     - sshd
 
-- name: Config | Set RhostsRSAAuthentication
+- name: SSHD | Set RhostsRSAAuthentication
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -88,7 +109,8 @@
     state: present
     create: true
     regexp: '^AllowGroups'
-    line: "AllowGroups={{ ' '.join(sshd_allow_groups) }}"
+    line: "AllowGroups {{ ' '.join(sshd_allow_groups) }}"
+  when: sshd_allow_groups is defined
   notify: restart sshd
   tags:
     - base
@@ -101,9 +123,19 @@
     state: present
     create: true
     regexp: '^PermitRootLogin'
-    line: "PermitRootLogin={{sshd_root_login}}"
+    line: "PermitRootLogin {{sshd_root_login}}"
   notify: restart sshd
   tags:
     - base
     - sshd
     - admin
+
+- name: SSHD | Enable sshd service
+  service:
+    name: "{{ sshd_service }}"
+    state: started
+    enabled: true
+  tags:
+    - base
+    - config
+    - sshd

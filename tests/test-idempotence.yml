@@ -1,0 +1,10 @@
+# configure proxy-servers
+- hosts: all
+  roles:
+    - msaf1980.linux-base
+  vars:
+    # Disable reboot check
+    - reboot_check: false
+    # Disable configure SELinux/firewalld
+    - firewalld_config: false
+    - systemd_config: false

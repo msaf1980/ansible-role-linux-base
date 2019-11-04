@@ -1,0 +1,10 @@
+# Enable journald persiustent logging
+- name: Services | Ensure `/var/log/journal` exists
+  file:
+    path: /var/log/journal
+    state: directory
+  notify:
+    - restart journald
+  tags:
+    - base
+    - services

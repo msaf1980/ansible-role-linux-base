@@ -1,0 +1,6 @@
+# configure proxy-servers
+- hosts: all
+  roles:
+    - msaf1980.linux-base
+
+

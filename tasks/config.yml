@@ -8,15 +8,7 @@
     state: present
     line: "{{ ansible_all_ipv4_addresses|last }} {{ ansible_hostname }} {{ ansible_hostname }}.{{ ansible_domain }}"
     regexp: "{{ ansible_hostname }}"
-  when: rhbase_hosts_entry
-  tags:
-    - base
-    - config
-
-- name: Config | Set the TZ environment variable
-  template:
-    src: etc_profile.d_localtime.j2
-    dest: /etc/profile.d/localtime.sh
+  when: hosts_entry
   tags:
     - base
     - config

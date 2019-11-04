@@ -1,0 +1,22 @@
+# Make sure the necessary services are enabled
+---
+
+- name: Services | Ensure specified services are running
+  service:
+    name: "{{ item }}"
+    enabled: true
+    state: started
+  with_items: "{{ rhbase_start_services }}"
+  tags:
+    - base
+    - services
+
+- name: Services | Ensure specified services are NOT running
+  service:
+    name: "{{ item }}"
+    enabled: false
+    state: stopped
+  with_items: "{{ rhbase_stop_services }}"
+  tags:
+    - base
+    - services

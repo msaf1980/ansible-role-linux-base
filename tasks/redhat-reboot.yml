@@ -1,11 +1,12 @@
 - name: install own version of 'needs-restarting'
-  copy: src="{{ role_path }}/files/redhat-needs-restarting.py" dest=/root/needs-restarting.py mode=0700
+  template: src="redhat-needs-restarting.py.j2" dest=/root/needs-restarting.py mode=0700
 
 - name: Reboot required (Red Hat) - Step 1
-  command: /root/needs-restarting.py -r
+  shell: "/root/needs-restarting.py -r"
   register: reboot_required
   ignore_errors: True
   changed_when: False
+  when: ansible_distribution_major_version|int < 8 # not work on RedHat 8
   tags:
     - base
     - install
@@ -15,7 +16,7 @@
   shell: ( /bin/sleep 5 ; shutdown -r now "Ansible updates triggered" ) &
   async: 30
   poll: 0
-  when: reboot_required.rc == 1 and automatic_reboot
+  when: reboot_required.rc is defined and reboot_required.rc == 1 and automatic_reboot
   tags:
     - base
     - install
@@ -27,7 +28,7 @@
     sleep: 5
     delay: 5
     timeout: 300
-  when: reboot_required.rc == 1 and automatic_reboot
+  when: reboot_required.rc is defined and reboot_required.rc == 1 and automatic_reboot
   tags:
     - base
     - install
@@ -36,7 +37,7 @@
 - name: Post login
   shell: "hostname"
   register: out
-  when: reboot_required.rc == 1 and automatic_reboot
+  when: reboot_required.rc is defined and reboot_required.rc == 1 and automatic_reboot
   tags:
     - base
     - install
@@ -45,16 +46,15 @@
 - name: "hostname out"
   debug:
     msg: "{{ out.stdout.split('\n') }}"
-  when: reboot_required.rc == 1 and automatic_reboot
+  when: reboot_required.rc is defined and reboot_required.rc == 1 and automatic_reboot
   tags:
     - base
     - install
     - updates
 
 - name: "reboot needed"
-  debug:
-    msg: "{{ inventory_hostname }} need reboot"
-  when: reboot_required.rc == 1 and automatic_reboot
+  command: echo "{{ inventory_hostname }} need reboot"
+  when: reboot_required.rc is defined and reboot_required.rc == 1 and reboot_check and not automatic_reboot
   tags:
     - base
     - install

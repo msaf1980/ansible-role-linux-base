@@ -6,12 +6,24 @@
     - "{{ ansible_os_family }}.yml"
   tags: base
 
+- include_vars: "{{ ansible_os_family }}_8.yml"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7
+
+- include_vars: rhbase.yml
+  when: ansible_os_family|lower in [ 'redhat', 'fedora' ]
+
 - include_tasks: redhat.yml
   when: ansible_os_family|lower == 'redhat'
 
 - include_tasks: config.yml    # Configuration (/etc/)
-- include_tasks: users.yml     # Create users
+- include_tasks: logging.yml   # Configure logging/crashdumps/etc
+- include_tasks: services.yml  # Start/stop basic services
+- include_tasks: selinux.yml  # SELinux settings
 - include_tasks: admin.yml     # Admin settings (a.o. sudo, etc)
+- include_tasks: sshd.yml      # OpenSSHD settings
+  when: selinux_enable|default(true)
+- include_tasks: firewalld.yml # Firewalld settings
+  when: firewalld_enable|default(true)
 
 - include_tasks: redhat-reboot.yml
   when: ansible_os_family|lower == 'redhat'

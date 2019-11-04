@@ -1,0 +1,20 @@
+# Basic SELinux settings
+---
+- name: SELinux | Make sure SELinux has the desired state ({{ selinux_state }})
+  selinux:
+    policy: targeted
+    state: "{{ selinux_state }}"
+  tags:
+    - base
+    - security
+
+- name: SELinux | Enable SELinux booleans
+  seboolean:
+    name: "{{ item }}"
+    state: true
+    persistent: true
+  with_items: "{{ selinux_booleans }}"
+  when: selinux_state == 'enforcing' or selinux_state == 'permissive'
+  tags:
+    - rhbase
+    - security

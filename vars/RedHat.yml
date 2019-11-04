@@ -1,14 +1,20 @@
----
+# Red Hat generic vars
+python_sys_version: ""
+
 rhbase_systemd_services:
   - systemd-journald
-  - systemd-tmpfiles-setup-dev
   - systemd-tmpfiles-setup
+  - systemd-tmpfiles-setup-dev
 
 rhbase_dependencies:
-  - libselinux-python
-  - libsemanage-python
+  - selinux-policy
+  - policycoreutils
+  - libselinux-python{{ python_sys_version }}
+  - libsemanage-python{{ python_sys_version }}
   - firewalld
+  - python{{ python_sys_version }}-firewall
 
+# Package management
 rhbase_package_manager: yum
 rhbase_package_manager_configuration: /etc/yum.conf
 

@@ -9,22 +9,6 @@
     creates: /etc/machine-id
   tags: base
 
-- name: Install | Ensure basic systemd services are running
-  service:
-    name: "{{ item }}"
-    state: started
-    enabled: true
-  with_items: "{{ rhbase_systemd_services }}"
-  tags: base
-
-- name: Install | Role/Ansible dependencies
-  package:
-    name: "{{ rhbase_dependencies }}"
-    state: installed
-  tags:
-    - base
-    - install
-
 - name: Install | Package management configuration ({{ rhbase_package_manager }})
   template:
     src: "etc_{{ rhbase_package_manager }}.conf.j2"
@@ -35,6 +19,22 @@
   tags:
     - base
     - install
+
+- name: Install | Role/Ansible dependencies
+  package:
+    name: "{{ rhbase_dependencies }}"
+    state: installed
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure basic systemd services are running
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  with_items: "{{ rhbase_systemd_services }}"
+  tags: base
 
 - name: Install | Ensure specified external repositories are installed
   package:
@@ -57,7 +57,7 @@
 
 - name: Install | Ensure specified repositories are enabled
   yum_repository:
-    name: {{ item }}
+    name: "{{ item }}"
     enabled: yes
   with_items: "{{ rhbase_enable_repos }}"
   tags:
@@ -77,7 +77,7 @@
 
 - name: Install | Ensure specified repositories are disabled
   yum_repository:
-    name: {{ item }}
+    name: "{{ item }}"
     enabled: no
   with_items: "{{ rhbase_disable_repos }}"
   tags:
