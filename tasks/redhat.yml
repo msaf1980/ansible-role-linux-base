@@ -1,0 +1,8 @@
+# roles/rhbase/tasks/main.yml
+---
+- include_tasks: redhat-install.yml   # Install repositories and packages
+- include_tasks: redhat-config.yml    # Configuration (/etc/)
+#- include_tasks: services.yml  # Start/stop basic services
+#- include_tasks: security.yml  # Security settings
+- include_tasks: auto-updates.yml  # Automatic updates
+  when: automatic_updates

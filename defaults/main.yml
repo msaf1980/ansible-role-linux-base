@@ -1,0 +1,15 @@
+automatic_updates: false  # Schedule automatic updates
+update_on_install: false # Run update all packages when run install role
+automatic_reboot: false  # Run automatic reboot when needed
+
+# /etc/hosts
+hosts_entry: false
+# SSHD
+sshd_hostbasedauthentication: 'no'
+sshd_ignorerhosts: 'yes'
+sshd_permitemptypasswords: 'no'
+sshd_protocol_version: 2
+sshd_rhostsrsaauthentication: 'no'
+sshd_permitrootlogin: 'no'
+# Admin
+sudo_wheel_nopasswd: false

@@ -1,0 +1,34 @@
+---
+sudo: required
+
+env:
+  matrix:
+    - DISTRIBUTION: centos
+      VERSION: 7
+    - DISTRIBUTION: centos
+      VERSION: 8
+    - DISTRIBUTION: oraclelinux
+      VERSION: 7
+    - DISTRIBUTION: oraclelinux
+      VERSION: 8
+# TODO
+#    - DISTRIBUTION: ubuntu
+#      VERSION: 16.04
+#    - DISTRIBUTION: ubuntu
+#      VERSION: 18.04
+#    - DISTRIBUTION: debian
+#      VERSION: 9
+#    - DISTRIBUTION: debian
+#      VERSION: 10
+# Debian buster docker image is buggy
+#    - DISTRIBUTION: debian
+#      VERSION: 10
+services:
+  - docker
+
+before_install:
+  # Install latest Git
+  - sudo apt-get update
+  - sudo apt-get install --only-upgrade git
+script:
+  - ROLE=msaf1980.linux-base ./tests/docker-tests.sh

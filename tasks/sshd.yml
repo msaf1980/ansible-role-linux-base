@@ -1,0 +1,109 @@
+---
+
+- name: Config | Disable reverse DNS lookup for SSH
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^UseDNS'
+    line: "UseDNS no"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: Config | Set protocol version for SSH
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^Protocol'
+    line: "Protocol {{sshd_protocol_version}}"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: Config | Set PermitEmptyPasswords
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^PermitEmptyPasswords'
+    insertafter: '^#PermitEmptyPasswords'
+    line: "PermitEmptyPasswords {{ sshd_permitemptypasswords }}"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: Config | Set IgnoreRhosts
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^IgnoreRhosts'
+    insertafter: '^#IgnoreRhosts'
+    line: "IgnoreRhosts {{ sshd_ignorerhosts }}"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: Config | Set HostbasedAuthentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^HostbasedAuthentication'
+    insertafter: '^#HostbasedAuthentication'
+    line: "HostbasedAuthentication {{ sshd_hostbasedauthentication }}"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: Config | Set RhostsRSAAuthentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: yes
+    regexp: '^RhostsRSAAuthentication'
+    insertafter: '^#RhostsRSAAuthentication'
+    line: "RhostsRSAAuthentication {{ sshd_rhostsrsaauthentication }}"
+  notify: restart sshd
+  tags:
+    - base
+    - config
+    - sshd
+
+- name: Admin | Make sure only these groups can ssh
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: true
+    regexp: '^AllowGroups'
+    line: "AllowGroups={{ ' '.join(sshd_allow_groups) }}"
+  notify: restart sshd
+  tags:
+    - base
+    - sshd
+    - admin
+
+- name: Admin | Root login over ssh
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: true
+    regexp: '^PermitRootLogin'
+    line: "PermitRootLogin={{sshd_root_login}}"
+  notify: restart sshd
+  tags:
+    - base
+    - sshd
+    - admin

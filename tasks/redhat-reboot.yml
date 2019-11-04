@@ -1,0 +1,61 @@
+- name: install own version of 'needs-restarting'
+  copy: src="{{ role_path }}/files/redhat-needs-restarting.py" dest=/root/needs-restarting.py mode=0700
+
+- name: Reboot required (Red Hat) - Step 1
+  command: /root/needs-restarting.py -r
+  register: reboot_required
+  ignore_errors: True
+  changed_when: False
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Reboot required (Red Hat) - Step 2
+  shell: ( /bin/sleep 5 ; shutdown -r now "Ansible updates triggered" ) &
+  async: 30
+  poll: 0
+  when: reboot_required.rc == 1 and automatic_reboot
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Wait for the reboot to complete
+  wait_for_connection:
+    connect_timeout: 20
+    sleep: 5
+    delay: 5
+    timeout: 300
+  when: reboot_required.rc == 1 and automatic_reboot
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Post login
+  shell: "hostname"
+  register: out
+  when: reboot_required.rc == 1 and automatic_reboot
+  tags:
+    - base
+    - install
+    - updates
+
+- name: "hostname out"
+  debug:
+    msg: "{{ out.stdout.split('\n') }}"
+  when: reboot_required.rc == 1 and automatic_reboot
+  tags:
+    - base
+    - install
+    - updates
+
+- name: "reboot needed"
+  debug:
+    msg: "{{ inventory_hostname }} need reboot"
+  when: reboot_required.rc == 1 and automatic_reboot
+  tags:
+    - base
+    - install
+    - updates

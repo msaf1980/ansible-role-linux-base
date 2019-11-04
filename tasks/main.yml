@@ -1,0 +1,17 @@
+---
+
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: base
+
+- include_tasks: redhat.yml
+  when: ansible_os_family|lower == 'redhat'
+
+- include_tasks: config.yml    # Configuration (/etc/)
+- include_tasks: users.yml     # Create users
+- include_tasks: admin.yml     # Admin settings (a.o. sudo, etc)
+
+- include_tasks: redhat-reboot.yml
+  when: ansible_os_family|lower == 'redhat'
