@@ -3,6 +3,8 @@
   roles:
     - msaf1980.linux-base
   vars:
+    - firewalld_config: false
+    - systemd_config: false
     - automatic_updates: true
     - update_on_install: true
     - sshd_enable: true

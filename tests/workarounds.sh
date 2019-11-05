@@ -19,6 +19,9 @@ if [ -f /etc/redhat-release ]; then
        yum install -y firewalld
        systemctl restart dbus
        systemctl restart firewalld
+       # https://bbs.archlinux.org/viewtopic.php?id=231728
+       [ -f /var/lib/ebtables/lock ] && rm  -f /var/lib/ebtables/lock
+       # Not work, disable config SELinux/Firewalld
     }
 fi
 
