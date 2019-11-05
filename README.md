@@ -28,40 +28,49 @@ No specific requirements
 | `automatic_updates`                       | false           | When set, automatic updates will be configured (yum-cron or dnf-automatic, as appropriate). See `rhbase_updates_*`    |
 | `update_on_install`                       | false           | When set, update packages (yum or dnf). See `rhbase_updates_*`                                                        |
 | `automatic_reboot`                        | false           | When set, run automatic reboot if needed                                                                              |
+| `reboot_check`                            | true            | When set, run check if reboot needed after update                                                                     |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | Config role                                                                                                                                                                         |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `hosts_entry`                             | true            | When set, an entry is added to `/etc/hosts` with the machine's host name. This speeds up gathering facts.             |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| Users role                                                                                                                                                                          |
-|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| `users_create_per_user_group`             | true            | Create a group for every user and make that their primary group.                                                      |
-| `users_group`                             | 'users'         | If we're not creating a per-user group, then this is the group all users                                              |
-| `user_groups`                             | []              | List of distcs specifying user groups that should be present. See below for an example.                               |
-| `users`                                   | []              | List of dicts specifying users that should be present. See below for an example.                                      |
-| `users_delete`                            | []              | List of users that should be deleted.                                                                                 |
-|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| Admin role                                                                                                                                                                          |
+| Admin task                                                                                                                                                                          |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `sudo_wheel_nopasswd`                     | true            | When set, allow members of wheel group run commands without password                                                  |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| SSHD role                                                                                                                                                                           |
+| Users task                                                                                                                                                                          |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Use other role, like https://github.com/msaf1980/ansible-role-users (aka msaf1980.users)                                                                                            |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| SSHD task                                                                                                                                                                           |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `sshd_allow_groups`                       | []              | List of groups allowed to ssh. When enabled, only users in these groups are allowed ssh access. (4)                   |
 | `sshd_hostbasedauthentication`            | 'no'            | Wheter to allow host based authentication.                                                                            |
 | `sshd_ignorerhosts`                       | 'yes'           | Specifies that .rhosts and .shosts files will not be used in RhostsRSAAuthentication or HostbasedAuthentication.      |
+| `sshd_passwordauthentication`             | 'yes'           | Allow password authentification                                                                                       |
 | `sshd_permitemptypasswords`               | 'no'            | Wheter to allow empty passwords to logon.                                                                             |
 | `sshd_permitrootlogin`                    | 'no'            | Permit root login over ssh                                                                                            |
 | `sshd_protocol_version`                   | 2               | Sets the SSH protocol version.                                                                                        |
 | `sshd_rhostsrsaauthentication`            | 'no'            | Wheter to allow rhosts RSA authentication                                                                             |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Security task                                                                                                                                                                       |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `selinux_config`                          | true            | Install and configure SELinux. When not set, skip SELinux task                                                        |
+| `selinux_booleans`                        | []              | List of SELinux booleans to be set to on, e.g. httpd_can_network_connect                                              |
+| `selinux_state`                           | enforcing       | The default SELinux state for the system. Just [leave this as is](http://stopdisablingselinux.com/).                  |
+| `firewalld_config`                        | true            | Install and configure firewalld. When not set, skip firewalld task                                                    |
+| `firewalld_allow_ports`                   | []              | List of ports to be allowed to pass through the firewall, e.g. 80/tcp, 53/udp, etc.                                   |
+| `firewalld_allow_services`                | []              | List of services to be allowed to pass through the firewall, e.g. http, dns, etc.(1)                                  |
+| `firewalld_allow_rules`                   | []              | List of allowed rich rules, see https://docs.ansible.com/ansible/latest/modules/firewalld_module.html                 |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 
 ## Role Variables (RedHat Specific)
 
 | Variable                                  | Default         | Comment                                                                                                               |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| Install role                                                                                                                                                                        |
+| Install task                                                                                                                                                                        |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `rhbase_package_proxy`                    |                 | Proxy for download packages                                                                                           |
 | `rhbase_enable_repos`                     | []              | List of dicts specifying repositories will be enabled.                                                                |
 | `rhbase_enable_all_repos`                 | []              | List of dicts specifying yum.repos.d files, where ALL repositories will be enabled.                                   |
 | `rhbase_disable_repos`                    | []              | List of dicts specifying repositories will be disabled.                                                               |
@@ -90,29 +99,15 @@ No specific requirements
 | `rhbase_yum_cron_hourly_update_level`     | minimal         | What kind of update to use on the hourly cron (default, security, security-severity:Critical, minimal, ...).          |
 | `rhbase_yum_cron_hourly_update_messages`  | true            | Whether to display or send messages when the hourly yum-cron has executed a task.                                     |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-
-
-##############################################
-TODO
-
-##############################################
-From parent repo
-
-| `rhbase_firewall_allow_ports`             | []              | List of ports to be allowed to pass through the firewall, e.g. 80/tcp, 53/udp, etc.                                   |
-| `rhbase_firewall_allow_services`          | []              | List of services to be allowed to pass through the firewall, e.g. http, dns, etc.(1)                                  |
-| `rhbase_firewall_interfaces`              | []              | List of network interfaces to be added to the public zone of the firewall ruleset.                                    |
-
-| `rhbase_override_firewalld_zones`         | false           | When set, allows NetworkManager to override firewall zones set by the administrator(2).                               |
-
-| `rhbase_selinux_booleans`                 | []              | List of SELinux booleans to be set to on, e.g. httpd_can_network_connect                                              |
-| `rhbase_selinux_state`                    | enforcing       | The default SELinux state for the system. Just [leave this as is](http://stopdisablingselinux.com/).                  |
-
+| Config role                                                                                                                                                                         |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `rhbase_tz`                               | :/etc/localtime | Sets the `$TZ` environment variable (5)                                                                               |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Service task                                                                                                                                                                        |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `rhbase_start_services`                   | []              | List of services that should be running and enabled.                                                                  |
 | `rhbase_stop_services`                    | []              | List of services that should **not** be running                                                                       |
-| `rhbase_tz`                               | :/etc/localtime | Sets the `$TZ` environment variable (5)                                                                               |
-
-
-
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 
 **Remarks:**
 
@@ -120,11 +115,9 @@ From parent repo
 
 (2) This is a workaround for [CentOS bug #7407](https://bugs.centos.org/view.php?id=7407). NetworkManager by default manages firewall zones, which overrides rules you add with `--permanent`.
 
-(3) Setting the variable `rhbase_ssh_user` does not actually create a user, but installs the `rhbase_ssh_key` in that user's home directory (`~/.ssh/authorized_keys`). Consequently, `rhbase_ssh_user` should be the name of an existing user, specified in `rhbase_users`.
+(3) If you use this role with Vagrant and set the variable `sshd_allow_groups`, you need to define the `vagrant` group in the list of `sshd_allow_groups`.
 
-(4) If you use this role with Vagrant and set the variable `rhbase_ssh_allow_groups`, you need to define the `vagrant` group in the list of `rhbase_ssh_allow_groups`.
-
-(5) Setting `$TZ` variable may reduce the number of system calls. See <https://blog.packagecloud.io/eng/2017/02/21/set-environment-variable-save-thousands-of-system-calls/>
+(4) Setting `$TZ` variable may reduce the number of system calls. See <https://blog.packagecloud.io/eng/2017/02/21/set-environment-variable-save-thousands-of-system-calls/>
 
 ### Enabling repositories
 

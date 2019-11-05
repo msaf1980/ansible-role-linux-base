@@ -1,6 +1,5 @@
 ---
 sudo: required
-
 env:
   matrix:
     - DISTRIBUTION: centos
@@ -9,8 +8,11 @@ env:
       VERSION: 8
     - DISTRIBUTION: oraclelinux
       VERSION: 7
-    - DISTRIBUTION: oraclelinux
-      VERSION: 8
+# Errror with dbus (docker)
+#    - DISTRIBUTION: oraclelinux
+#      VERSION: 8
+    - DISTRIBUTION: fedora
+      VERSION: 30
 # TODO
 #    - DISTRIBUTION: ubuntu
 #      VERSION: 16.04
@@ -20,9 +22,6 @@ env:
 #      VERSION: 9
 #    - DISTRIBUTION: debian
 #      VERSION: 10
-# Debian buster docker image is buggy
-#    - DISTRIBUTION: debian
-#      VERSION: 10
 services:
   - docker
 
@@ -30,5 +29,8 @@ before_install:
   # Install latest Git
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
+  - sudo apt-get install python-pip || sudo apt-get install python3-pip
+  - sudo pip install yamllint ansible-lint || sudo pip3 install yamllint ansible-lint
 script:
-  - ROLE=msaf1980.linux-base ./tests/docker-tests.sh
+  - ./lint.sh
+  - ROLE=msaf1980.linux-base ./tests/docker-tests.sh --no-firewalld

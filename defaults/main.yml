@@ -1,15 +1,70 @@
 automatic_updates: false  # Schedule automatic updates
 update_on_install: false # Run update all packages when run install role
 automatic_reboot: false  # Run automatic reboot when needed
+reboot_check: true
 
 # /etc/hosts
 hosts_entry: false
 # SSHD
 sshd_hostbasedauthentication: 'no'
 sshd_ignorerhosts: 'yes'
+sshd_passwordauthentication: 'yes'
+sshd_root_login: 'yes'
 sshd_permitemptypasswords: 'no'
 sshd_protocol_version: 2
 sshd_rhostsrsaauthentication: 'no'
 sshd_permitrootlogin: 'no'
 # Admin
 sudo_wheel_nopasswd: false
+
+# Firewalld
+firewalld_allow_services: []
+firewalld_allow_ports: []
+firewalld_allow_rules: []
+# SELinux
+selinux_state: enforcing
+selinux_booleans: []
+
+################################################################
+# RedHat-based variables (RHEL, CentOS, OracleLinux, Fedora)
+
+# Package management
+rhbase_enable_repos: []
+rhbase_enable_all_repos: []
+rhbase_disable_repos: []
+rhbase_disable_all_repos: []
+rhbase_install_packages: []
+rhbase_remove_packages: []
+rhbase_repo_exclude: []
+rhbase_repo_installonly_limit: 3
+rhbase_repo_gpgcheck: true
+rhbase_repo_remove_dependencies: true
+rhbase_repo_exclude_from_update: []
+rhbase_repositories: []
+
+rhbase_updates_type: default
+rhbase_updates_random_sleep: 360
+rhbase_updates_download: true
+rhbase_updates_apply: true
+rhbase_updates_message: true
+rhbase_updates_emit_via: stdio
+rhbase_updates_email_from: root
+rhbase_updates_email_to: root
+rhbase_updates_email_host: localhost
+rhbase_updates_debuglevel: 0
+
+# Yum-cron
+rhbase_yum_cron_hourly_sleep_time: 15
+rhbase_yum_cron_hourly_update_level: minimal
+rhbase_yum_cron_hourly_update_messages: true
+rhbase_yum_cron_hourly_download_updates: true
+rhbase_yum_cron_hourly_install_updates: false
+
+# Config
+rhbase_tz: :/etc/localtime
+
+# Services
+rhbase_start_services: []
+rhbase_stop_services: []
+
+################################################################

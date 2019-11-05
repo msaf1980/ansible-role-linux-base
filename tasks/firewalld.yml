@@ -1,0 +1,65 @@
+# Basic firewalld settings
+---
+
+- name: Firewalld | Make sure the firewall is running
+  service:
+    name: firewalld
+    state: started
+    enabled: true
+  tags:
+    - base
+    - security
+
+- name: Firewalld | Make sure basic services can pass through firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items:
+    - dhcpv6-client
+    - ssh
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall
+
+- name: Firewalld | Make sure user specified services can pass through firewall
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items: "{{ firewalld_allow_services }}"
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall
+
+- name: Firewalld | Make sure user specified ports can pass through firewall
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items: "{{ firewalld_allow_ports }}"
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall
+
+- name: Firewalld | Make sure user specified rules can pass through firewall
+  firewalld:
+    rich_rule: "{{ item }}"
+    permanent: true
+    state: enabled
+  with_items: "{{ firewalld_allow_rules }}"
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall

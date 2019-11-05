@@ -4,36 +4,45 @@
 # NetworkManager by default manages firewall zones, which overrides rules you
 # add with --permanent.
 
-- name: Config | Check if ifup-eth script overrides firewall zone
-  shell: 'grep "Inform firewall which network zone" /etc/sysconfig/network-scripts/ifup-eth'
-  register: ifup_eth_match
-  when: not rhbase_override_firewalld_zones
-  changed_when: false
-  failed_when: false
-  tags:
-    - base
-    - config
+#- name: Config | Check if ifup-eth script overrides firewall zone
+  #shell: 'grep "Inform firewall which network zone" /etc/sysconfig/network-scripts/ifup-eth'
+  #register: ifup_eth_match
+  #when: not rhbase_override_firewalld_zones
+  #changed_when: false
+  #failed_when: false
+  #tags:
+    #- base
+    #- config
 
-- name: Config | Don’t override firewall zone in ifup-eth script
-  shell: "sed -i -e '/Inform firewall which network zone/,+4d' /etc/sysconfig/network-scripts/ifup-eth"
-  when: not rhbase_override_firewalld_zones and ifup_eth_match.stdout != ''
-  tags:
-    - base
-    - config
+#- name: Config | Don’t override firewall zone in ifup-eth script
+  #shell: "sed -i -e '/Inform firewall which network zone/,+4d' /etc/sysconfig/network-scripts/ifup-eth"
+  #when: not rhbase_override_firewalld_zones and ifup_eth_match.stdout != ''
+  #tags:
+    #- base
+    #- config
 
-- name: Config | Check if ifup-post script overrides firewall zone
-  shell: 'grep "Inform firewall which network zone" /etc/sysconfig/network-scripts/ifup-post'
-  register: ifup_post_match
-  when: not rhbase_override_firewalld_zones
-  changed_when: false
-  failed_when: false
-  tags:
-    - base
-    - config
+#- name: Config | Check if ifup-post script overrides firewall zone
+  #shell: 'grep "Inform firewall which network zone" /etc/sysconfig/network-scripts/ifup-post'
+  #register: ifup_post_match
+  #when: not rhbase_override_firewalld_zones
+  #changed_when: false
+  #failed_when: false
+  #tags:
+    #- base
+    #- config
 
-- name: Config | Don’t override firewall zone in ifup-post script
-  shell: "sed -i -e '/Inform firewall which network zone/,+4d' /etc/sysconfig/network-scripts/ifup-post"
-  when: not rhbase_override_firewalld_zones and ifup_post_match.stdout != ''
+#- name: Config | Don’t override firewall zone in ifup-post script
+  #shell: "sed -i -e '/Inform firewall which network zone/,+4d' /etc/sysconfig/network-scripts/ifup-post"
+  #when: not rhbase_override_firewalld_zones and ifup_post_match.stdout != ''
+  #tags:
+    #- base
+    #- config
+
+- name: Config | Set the TZ environment variable
+  template:
+    src: etc_profile.d_localtime.j2
+    dest: /etc/profile.d/localtime.sh
+  when: rhbase_tz is defined
   tags:
     - base
     - config
