@@ -9,11 +9,10 @@ hosts_entry: false
 sshd_hostbasedauthentication: 'no'
 sshd_ignorerhosts: 'yes'
 sshd_passwordauthentication: 'yes'
-sshd_root_login: 'yes'
 sshd_permitemptypasswords: 'no'
+sshd_permitrootlogin: 'no'
 sshd_protocol_version: 2
 sshd_rhostsrsaauthentication: 'no'
-sshd_permitrootlogin: 'no'
 # Admin
 sudo_wheel_nopasswd: true
 

@@ -123,7 +123,7 @@
     state: present
     create: true
     regexp: '^PermitRootLogin'
-    line: "PermitRootLogin {{sshd_root_login}}"
+    line: "PermitRootLogin {{ sshd_permitrootlogin }}"
   notify: restart sshd
   tags:
     - base
