@@ -103,7 +103,7 @@
     - config
     - sshd
 
-- name: Admin | Make sure only these groups can ssh
+- name: SSHD | Make sure only these groups can ssh
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
@@ -117,7 +117,7 @@
     - sshd
     - admin
 
-- name: Admin | Root login over ssh
+- name: SSHD | Root login over ssh
   lineinfile:
     dest: /etc/ssh/sshd_config
     state: present
