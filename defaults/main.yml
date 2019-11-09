@@ -15,7 +15,7 @@ sshd_protocol_version: 2
 sshd_rhostsrsaauthentication: 'no'
 sshd_permitrootlogin: 'no'
 # Admin
-sudo_wheel_nopasswd: false
+sudo_wheel_nopasswd: true
 
 # Firewalld
 firewalld_allow_services: []
