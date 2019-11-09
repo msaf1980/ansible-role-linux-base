@@ -4,7 +4,6 @@
     - msaf1980.linux-base
   vars:
     - selinux_config: true
-    - firewalld_config: true
     - automatic_updates: true
     - update_on_install: true
     - sshd_enable: true

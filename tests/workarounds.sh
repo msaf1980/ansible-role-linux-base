@@ -13,16 +13,16 @@ if [ -f /etc/redhat-release ]; then
        yum clean all
        yum install -y yum-plugin-ovl
     }
-    [ "${major_version}" == "7" ] && {
+    #[ "${major_version}" == "7" ] && {
        # Firewalld fails to start because polkit doesn't allow it to claim the dbus path
        # https://bugzilla.redhat.com/show_bug.cgi?id=1575845
-       yum install -y firewalld
-       systemctl restart dbus
-       systemctl restart firewalld
+       #yum install -y firewalld
+       #systemctl restart dbus
+       #systemctl restart firewalld
        # https://bbs.archlinux.org/viewtopic.php?id=231728
-       [ -f /var/lib/ebtables/lock ] && rm  -f /var/lib/ebtables/lock
+       #[ -f /var/lib/ebtables/lock ] && rm  -f /var/lib/ebtables/lock
        # Not work, disable config SELinux/Firewalld
-    }
+    #}
 fi
 
 exit 0

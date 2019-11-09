@@ -5,6 +5,3 @@
   vars:
     # Disable reboot check
     - reboot_check: false
-    # Disable configure SELinux/firewalld
-    - firewalld_config: false
-    - systemd_config: false

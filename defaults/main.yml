@@ -29,6 +29,7 @@ selinux_booleans: []
 # RedHat-based variables (RHEL, CentOS, OracleLinux, Fedora)
 
 # Package management
+rhbase_repo_gpgcheck: true
 rhbase_enable_repos: []
 rhbase_enable_all_repos: []
 rhbase_disable_repos: []

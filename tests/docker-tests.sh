@@ -19,6 +19,8 @@
 # $ DISTRIBUTION=ubuntu VERSION=18.04 ROLE=msaf1980.squid ./tests/docker-tests.sh
 #
 
+[ -z "${1}" ] && opt="" || opt="${1}"
+
 readonly script_dir=$( dirname "${BASH_SOURCE[0]}" )
 
 . ${script_dir}/docker-tools || exit 1
@@ -32,9 +34,13 @@ main_id="${id}"
 exec_container ${main_id} ${role_dir}/tests/workarounds.sh || exit 1
 
 run_syntax_check ${main_id} ${role_dir}/tests/test.yml
-run_test_playbook ${main_id} ${role_dir}/tests/test.yml
+if [ "${opt}" == "--no-firewalld" ]; then
+  # Workaround for bug with start firewalld
+  run_test_playbook ${main_id} ${role_dir}/tests/test-nofirewalld.yml
+else
+  run_test_playbook ${main_id} ${role_dir}/tests/test.yml
+fi
 
-run_syntax_check ${main_id} ${role_dir}/tests/test-default.yml
 run_test_playbook ${main_id} ${role_dir}/tests/test-default.yml
 
 run_idempotence_test ${main_id} ${role_dir}/tests/test-idempotence.yml

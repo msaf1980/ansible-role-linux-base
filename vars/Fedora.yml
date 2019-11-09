@@ -6,11 +6,12 @@ rhbase_systemd_services:
   - systemd-tmpfiles-setup
   - systemd-tmpfiles-setup-dev
 
+selinux_config: true
 rhbase_dependencies:
+  - systemd-udev
   - selinux-policy
   - policycoreutils
   - python{{ python_sys_version }}-libsemanage
-  - systemd-udev
   - firewalld
   - python{{ python_sys_version }}-firewall
 

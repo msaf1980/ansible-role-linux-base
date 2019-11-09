@@ -2,8 +2,7 @@
 - hosts: all
   roles:
     - msaf1980.linux-base
-  vars:
-    - firewalld_config: false
-    - systemd_config: false
+
+
 
 

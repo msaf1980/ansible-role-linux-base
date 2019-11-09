@@ -1,5 +1,6 @@
 # Basic SELinux settings
 ---
+
 - name: SELinux | Make sure SELinux has the desired state ({{ selinux_state }})
   selinux:
     policy: targeted

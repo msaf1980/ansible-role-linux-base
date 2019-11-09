@@ -33,5 +33,4 @@ before_install:
   - sudo pip install yamllint ansible-lint || sudo pip3 install yamllint ansible-lint
 script:
   - ./lint.sh
-  - ROLE=msaf1980.linux-base ./tests/docker-tests.sh
-
+  - ROLE=msaf1980.linux-base ./tests/docker-tests.sh --no-firewalld
