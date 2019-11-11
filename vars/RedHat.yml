@@ -6,8 +6,6 @@ rhbase_systemd_services:
   - systemd-tmpfiles-setup
   - systemd-tmpfiles-setup-dev
 
-
-
 selinux_config: true
 rhbase_dependencies:
   - selinux-policy

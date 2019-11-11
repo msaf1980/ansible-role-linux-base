@@ -9,6 +9,7 @@
   tags:
     - base
     - security
+    - firewall
 
 - name: Firewalld | Make sure basic services can pass through firewall
   firewalld:
