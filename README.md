@@ -62,6 +62,9 @@ No specific requirements
 | `firewalld_allow_ports`                   | []              | List of ports to be allowed to pass through the firewall, e.g. 80/tcp, 53/udp, etc.                                   |
 | `firewalld_allow_services`                | []              | List of services to be allowed to pass through the firewall, e.g. http, dns, etc.(1)                                  |
 | `firewalld_allow_rules`                   | []              | List of allowed rich rules, see https://docs.ansible.com/ansible/latest/modules/firewalld_module.html                 |
+| `firewalld_remove_ports`                  | []              | List of ports to be removed from firewall config                                                                      |
+| `firewalld_remove_services`               | []              | List of services to be removed from firewall config                                                                   |
+| `firewalld_remove_rules`                  | []              | List of rich rules to be removed from firewall config                                                                 |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 
 ## Role Variables (RedHat Specific)

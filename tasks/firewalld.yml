@@ -64,3 +64,42 @@
     - base
     - security
     - firewall
+
+- name: Firewalld | Remove specified services
+  firewalld:
+    service: "{{ item }}"
+    permanent: true
+    state: disabled
+  with_items: "{{ firewalld_remove_services }}"
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall
+
+- name: Firewalld | Remove specified ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: true
+    state: disabled
+  with_items: "{{ firewalld_remove_ports }}"
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall
+
+- name: Firewalld | Remove specified rules
+  firewalld:
+    rich_rule: "{{ item }}"
+    permanent: true
+    state: disabled
+  with_items: "{{ firewalld_remove_rules }}"
+  notify:
+    - restart firewalld
+  tags:
+    - base
+    - security
+    - firewall
