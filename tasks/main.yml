@@ -14,13 +14,13 @@
 
 - name: Disable SELinux config
   set_fact:
-    selinux_config: false
-  when: not selinux_config is defined
+    selinux_config_base: false
+  when: not selinux_config_base is defined
 
 - name: Disable firewalld config
   set_fact:
-    firewalld_config: false
-  when: not firewalld_config is defined
+    firewalld_config_base: false
+  when: not firewalld_config_base is defined
 
 - include_tasks: redhat.yml
   when: ansible_os_family|lower == 'redhat'
@@ -31,9 +31,9 @@
 - include_tasks: selinux.yml  # SELinux settings
 - include_tasks: admin.yml     # Admin settings (a.o. sudo, etc)
 - include_tasks: sshd.yml      # OpenSSHD settings
-  when: selinux_config
+  when: selinux_config_base
 - include_tasks: firewalld.yml # Firewalld settings
-  when: firewalld_config
+  when: firewalld_config_base
 
 - include_tasks: redhat-reboot.yml
   when: ansible_os_family|lower == 'redhat'

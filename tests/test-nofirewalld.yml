@@ -3,7 +3,7 @@
   roles:
     - msaf1980.linux-base
   vars:
-    - selinux_config: true
+    - selinux_config_base: true
     - automatic_updates: true
     - update_on_install: true
     - sshd_enable: true

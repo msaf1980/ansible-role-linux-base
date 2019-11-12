@@ -56,10 +56,10 @@ No specific requirements
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | Security task                                                                                                                                                                       |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| `selinux_config`                          | true            | Install and configure SELinux. When not set, skip SELinux task                                                        |
+| `selinux_config_base`                     | true            | Install and configure SELinux. When not set, skip SELinux task                                                        |
 | `selinux_booleans`                        | []              | List of SELinux booleans to be set to on, e.g. httpd_can_network_connect                                              |
 | `selinux_state`                           | enforcing       | The default SELinux state for the system. Just [leave this as is](http://stopdisablingselinux.com/).                  |
-| `firewalld_config`                        | true            | Install and configure firewalld. When not set, skip firewalld task                                                    |
+| `firewalld_config_base`                   | true            | Install and configure firewalld. When not set, skip firewalld task                                                    |
 | `firewalld_allow_ports`                   | []              | List of ports to be allowed to pass through the firewall, e.g. 80/tcp, 53/udp, etc.                                   |
 | `firewalld_allow_services`                | []              | List of services to be allowed to pass through the firewall, e.g. http, dns, etc.(1)                                  |
 | `firewalld_allow_rules`                   | []              | List of allowed rich rules, see https://docs.ansible.com/ansible/latest/modules/firewalld_module.html                 |
