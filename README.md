@@ -48,6 +48,7 @@ No specific requirements
 | `sshd_hostbasedauthentication`            | 'no'            | Wheter to allow host based authentication.                                                                            |
 | `sshd_ignorerhosts`                       | 'yes'           | Specifies that .rhosts and .shosts files will not be used in RhostsRSAAuthentication or HostbasedAuthentication.      |
 | `sshd_passwordauthentication`             | 'yes'           | Allow password authentification                                                                                       |
+| `sshd_maxauthtries`                       |                 | Limit the number of bad passwords per connection. Default is 6.                                                       |
 | `sshd_permitemptypasswords`               | 'no'            | Wheter to allow empty passwords to logon.                                                                             |
 | `sshd_permitrootlogin`                    | 'no'            | Permit root login over ssh                                                                                            |
 | `sshd_protocol_version`                   | 2               | Sets the SSH protocol version.                                                                                        |

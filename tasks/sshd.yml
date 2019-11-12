@@ -26,7 +26,7 @@
     state: present
     create: yes
     regexp: '^Protocol'
-    line: "Protocol {{sshd_protocol_version}}"
+    line: "Protocol {{ sshd_protocol_version }}"
   notify: restart sshd
   tags:
     - base
@@ -124,6 +124,20 @@
     create: true
     regexp: '^PermitRootLogin'
     line: "PermitRootLogin {{ sshd_permitrootlogin }}"
+  notify: restart sshd
+  tags:
+    - base
+    - sshd
+    - admin
+
+- name: SSHD | MaxAuthTries
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    state: present
+    create: true
+    regexp: '^MaxAuthTries'
+    line: "MaxAuthTries {{ sshd_maxauthtries }}"
+  when: sshd_maxauthtries is defined
   notify: restart sshd
   tags:
     - base
