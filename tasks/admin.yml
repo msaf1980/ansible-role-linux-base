@@ -1,11 +1,11 @@
 ---
 - name: Admin | Make sure users from the wheel group can use sudo
   lineinfile:
-    dest: /etc/sudoers.d/wheel
+    dest: /etc/sudoers.d/admin
     state: present
     create: true
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) ALL'
+    regexp: '^%{{ admin_group }}'
+    line: '%{{ admin_group }} ALL=(ALL) ALL'
     validate: 'visudo -cf %s'
   when: not sudo_wheel_nopasswd
   tags:
@@ -14,11 +14,11 @@
 
 - name: Admin | Make sure users from the wheel group can use sudo
   lineinfile:
-    dest: /etc/sudoers.d/wheel
+    dest: /etc/sudoers.d/admin
     state: present
     create: true
-    regexp: '^%wheel'
-    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    regexp: '^%{{ admin_group }}'
+    line: '%{{ admin_group }} ALL=(ALL) NOPASSWD: ALL'
     validate: 'visudo -cf %s'
   when: sudo_wheel_nopasswd
   tags:
@@ -27,7 +27,7 @@
 
 - name: Admin | Set attributes of sudo configuration file for wheel group
   file:
-    path: /etc/sudoers.d/wheel
+    path: /etc/sudoers.d/admin
     owner: root
     group: root
     mode: 0440
