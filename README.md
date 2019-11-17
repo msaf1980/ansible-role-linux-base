@@ -37,6 +37,7 @@ No specific requirements
 | Admin task                                                                                                                                                                          |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `admin_group`                             | 'wheel'         | Group with sudo admin access                                                                                          |
+| `su_wheel_only`                           | false           | When set, allow su only for members of wheel group                                                                    |
 | `sudo_wheel_nopasswd`                     | true            | When set, allow members of wheel group run commands without password                                                  |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | Users task                                                                                                                                                                          |

@@ -15,6 +15,7 @@ sshd_protocol_version: 2
 sshd_rhostsrsaauthentication: 'no'
 # Admin
 admin_group: "wheel"
+su_wheel_only: false
 sudo_wheel_nopasswd: true
 
 # Firewalld

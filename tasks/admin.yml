@@ -1,4 +1,9 @@
 ---
+- name: Admin | Create {{ admin_group }} group
+  group:
+    name: "{{ admin_group }}"
+    system: yes
+
 - name: Admin | Make sure users from the wheel group can use sudo
   lineinfile:
     dest: /etc/sudoers.d/admin
@@ -31,6 +36,18 @@
     owner: root
     group: root
     mode: 0440
+  tags:
+    - base
+    - admin
+
+- name: Admin | Make sure that only users from the wheel group can use su
+  lineinfile:
+    dest: /etc/pam.d/su
+    state: present
+    create: true
+    regexp: '^auth       required pam_wheel.so'
+    line: 'auth       required pam_wheel.so'
+  when: su_wheel_only
   tags:
     - base
     - admin

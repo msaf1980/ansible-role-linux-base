@@ -8,7 +8,8 @@
     - automatic_updates: true
     - update_on_install: true
     - sshd_enable: true
-    - sshd_allow_groups: [ 'wheel' ]
+    - sshd_allow_groups: [ "{{ admin_group }}" ]
+    - su_wheel_only: true
     - sshd_passwordauthentication: 'no'
     - sshd_maxauthtries: 2
     - rhbase_install_packages: [ 'man', 'lsscsi', 'sysstat' ]
