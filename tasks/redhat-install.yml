@@ -22,8 +22,8 @@
 
 - name: Install | Role/Ansible dependencies
   package:
-    name: "{{ rhbase_dependencies }}"
-    state: installed
+    name: "{{ dependencies_base }}"
+    state: present
   tags:
     - base
     - install
@@ -39,7 +39,7 @@
 - name: Install | Ensure specified external repositories are installed
   package:
     name: "{{ rhbase_repositories }}"
-    state: installed
+    state: present
   tags:
     - base
     - install

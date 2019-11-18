@@ -1,6 +1,14 @@
 # Basic firewalld settings
 ---
 
+- name: Install | Role/Ansible dependencies
+  package:
+    name: "{{ dependencies_firewalld }}"
+    state: present
+  tags:
+    - base
+    - install
+
 - name: Firewalld | Make sure the firewall is running
   service:
     name: firewalld

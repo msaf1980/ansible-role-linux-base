@@ -12,10 +12,10 @@
 - include_vars: rhbase.yml
   when: ansible_os_family|lower in [ 'redhat', 'fedora' ]
 
-- name: Disable SELinux config
+- name: Check for Enable SELinux config (RedHat)
   set_fact:
-    selinux_config_base: false
-  when: not selinux_config_base is defined
+    selinux_config_base: "{{ selinux_config_rhbase | default(false) }}"
+  when: ansible_os_family|lower in [ 'redhat', 'fedora' ]
 
 - name: Disable firewalld config
   set_fact:
@@ -29,9 +29,9 @@
 - include_tasks: logging.yml   # Configure logging/crashdumps/etc
 - include_tasks: services.yml  # Start/stop basic services
 - include_tasks: selinux.yml  # SELinux settings
+  when: selinux_config_base
 - include_tasks: admin.yml     # Admin settings (a.o. sudo, etc)
 - include_tasks: sshd.yml      # OpenSSHD settings
-  when: selinux_config_base
 - include_tasks: firewalld.yml # Firewalld settings
   when: firewalld_config_base
 

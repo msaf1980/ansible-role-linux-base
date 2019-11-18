@@ -58,7 +58,6 @@ No specific requirements
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | Security task                                                                                                                                                                       |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
-| `selinux_config_base`                     | true            | Install and configure SELinux. When not set, skip SELinux task                                                        |
 | `selinux_booleans`                        | []              | List of SELinux booleans to be set to on, e.g. httpd_can_network_connect                                              |
 | `selinux_state`                           | enforcing       | The default SELinux state for the system. Just [leave this as is](http://stopdisablingselinux.com/).                  |
 | `firewalld_config_base`                   | true            | Install and configure firewalld. When not set, skip firewalld task                                                    |
@@ -88,7 +87,6 @@ No specific requirements
 | `rhbase_repo_remove_dependencies`         | true            | When set, dependencies that become unused after removing a package will be removed as well.                           |
 | `rhbase_remove_packages`                  | []              | List of packages that should **not** be installed                                                                     |
 | `rhbase_repositories`                     | []              | List of RPM packages (including URLs) that install external repositories (e.g. `epel-release`).                       |
-| `rhbase_update`                           | false           | When set, a package update will be performed after installation.                                                      |
 | `rhbase_updates_apply`                    | true            | When set, automatic updates will actually install updates.                                                            |
 | `rhbase_updates_debuglevel`               | 0               | Integer denoting the level of verbosity of debug messages.                                                            |
 | `rhbase_updates_download`                 | true            | When set, automatic updates will download                                                                             |
@@ -108,6 +106,10 @@ No specific requirements
 | Config role                                                                                                                                                                         |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `rhbase_tz`                               | :/etc/localtime | Sets the `$TZ` environment variable (5)                                                                               |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Security task                                                                                                                                                                       |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `selinux_config_rhbase`                   | true            | Install and configure SELinux on RedHat-based Linux. When not set, skip SELinux task                                  |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | Service task                                                                                                                                                                        |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|

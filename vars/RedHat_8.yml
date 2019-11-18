@@ -2,6 +2,7 @@
 python_sys_version: "3"
 
 rhbase_dependencies:
+  - sudo
   - systemd-udev
   - selinux-policy
   - policycoreutils

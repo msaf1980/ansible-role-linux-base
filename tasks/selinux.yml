@@ -1,6 +1,14 @@
 # Basic SELinux settings
 ---
 
+- name: Install | SELinux/Ansible dependencies
+  package:
+    name: "{{ dependencies_selinux }}"
+    state: present
+  tags:
+    - base
+    - security
+
 - name: SELinux | Make sure SELinux has the desired state ({{ selinux_state }})
   selinux:
     policy: targeted
