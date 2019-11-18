@@ -1,0 +1,3 @@
+# SSHD
+ssh_packages: [ 'openssh-server', 'openssh-client' ]
+sshd_service: 'sshd'

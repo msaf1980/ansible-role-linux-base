@@ -1,0 +1,84 @@
+# Install custom repositories and packages. Repositories should be installed
+# using an RPM package. A list of URLs to the RPMs for these repositories
+# should be specified in group_vars or host_vars.
+---
+
+- name: Install | Ensure the machine-ID is available
+  command: systemd-machine-id-setup
+  args:
+    creates: /etc/machine-id
+  tags: base
+
+- name: Install | Package management configuration (disable proxy)
+  file:
+    path: "/etc/apt/apt.conf.d/proxy.conf"
+    state: absent
+  when: debbase_package_proxy is undefined
+  tags:
+    - base
+    - install
+
+- name: Install | Package management configuration (proxy)
+  lineinfile:
+    dest: "/etc/apt/apt.conf.d/proxy.conf"
+    line: "{{ item.value }}"
+    state: present
+    regexp: "{{ item.regexp }}"
+  with_items:
+    - { regexp: '^Acquire::http::Proxy[ \t]', value: 'Acquire::http::Proxy "{{ debbase_package_proxy }}";' }
+    - { regexp: '^Acquire::ftp::Proxy[ \t]',  value: 'Acquire::ftp::Proxy "{{ debbase_package_proxy }}";' }
+    - { regexp: '^Acquire::::Proxy[ \t]',     value: 'Acquire::::Proxy "true";' }
+  when: debbase_package_proxy is defined
+  tags:
+    - base
+    - install
+
+- name: Install | Run apt-get update
+  apt:
+    update_cache: yes
+
+- name: Install | Role/Ansible dependencies
+  package:
+    name: "{{ dependencies_base }}"
+    state: present
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure basic systemd services are running
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  with_items: "{{ debbase_systemd_services }}"
+  tags: base
+
+# Configure repo
+
+#
+
+- name: Install | Ensure specified packages are installed
+  package:
+    name: "{{ debbase_install_packages }}"
+    state: present
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure specified packages are NOT installed
+  package:
+    name: "{{ debbase_remove_packages }}"
+    state: absent
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure all updates are installed
+  package:
+    name: '*'
+    state: latest
+  when: update_on_install
+  tags:
+    - base
+    - update
+    - install

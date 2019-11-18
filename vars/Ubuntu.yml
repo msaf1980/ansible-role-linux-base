@@ -1,0 +1,25 @@
+# Debian
+python_sys_version: ""
+python_sys_pip: "pip{{ python_sys_version }}"
+
+debbase_systemd_services:
+  - systemd-journald
+  - systemd-tmpfiles-setup
+
+dependencies_base:
+  - sudo
+  - aptitude
+  - python{{ python_sys_version }}-pip
+
+selinux_config_debbase: false
+
+#dependencies_selinux:
+#  - selinux-policy
+#  - policycoreutils
+#  - libselinux-python{{ python_sys_version }}
+#  - libsemanage-python{{ python_sys_version }}
+
+dependencies_firewalld:
+  - firewalld
+
+# Package management

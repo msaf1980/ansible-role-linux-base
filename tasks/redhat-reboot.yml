@@ -52,8 +52,9 @@
     - install
     - updates
 
-- name: "reboot needed"
-  command: echo "{{ inventory_hostname }} need reboot"
+- name: "set reboot_needed"
+  set_fact:
+    reboot_needed: true
   when: reboot_required.rc is defined and reboot_required.rc == 1 and reboot_check and not automatic_reboot
   tags:
     - base

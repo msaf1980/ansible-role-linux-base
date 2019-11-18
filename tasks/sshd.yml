@@ -2,7 +2,7 @@
 - name: SSHD | Ensure specified packages are installed
   package:
     name: "{{ ssh_packages }}"
-    state: installed
+    state: present
   tags:
     - base
     - install

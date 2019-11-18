@@ -8,20 +8,22 @@ env:
       VERSION: 8
     - DISTRIBUTION: oraclelinux
       VERSION: 7
-# Errror with dbus (docker)
+# Error with dbus (systemd docker)
 #    - DISTRIBUTION: oraclelinux
 #      VERSION: 8
+#    - DISTRIBUTION: fedora
+#      VERSION: 29
     - DISTRIBUTION: fedora
       VERSION: 30
-# TODO
+    - DISTRIBUTION: debian
+      VERSION: 9
+    - DISTRIBUTION: debian
+      VERSION: 10
+# Error with dbus (systemd docker)
 #    - DISTRIBUTION: ubuntu
 #      VERSION: 16.04
 #    - DISTRIBUTION: ubuntu
 #      VERSION: 18.04
-#    - DISTRIBUTION: debian
-#      VERSION: 9
-#    - DISTRIBUTION: debian
-#      VERSION: 10
 services:
   - docker
 
@@ -30,7 +32,5 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install --only-upgrade git
   - sudo apt-get install python-pip || sudo apt-get install python3-pip
-  - sudo pip install yamllint ansible-lint || sudo pip3 install yamllint ansible-lint
 script:
-  - ./lint.sh
   - ROLE=msaf1980.linux-base ./tests/docker-tests.sh --no-firewalld

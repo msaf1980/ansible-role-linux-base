@@ -1,0 +1,12 @@
+# Set defaults for Debian
+---
+
+- include_vars: "{{ ansible_distribution }}_9.yml"
+  when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int > 8
+
+- include_vars: "Debian_9.yml"
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int > 17
+
+- name: Check for Enable SELinux config (Debian)
+  set_fact:
+    selinux_config_base: "{{ selinux_config_debbase | default(false) }}"

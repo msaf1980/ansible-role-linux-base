@@ -60,7 +60,7 @@ No specific requirements
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `selinux_booleans`                        | []              | List of SELinux booleans to be set to on, e.g. httpd_can_network_connect                                              |
 | `selinux_state`                           | enforcing       | The default SELinux state for the system. Just [leave this as is](http://stopdisablingselinux.com/).                  |
-| `firewalld_config_base`                   | true            | Install and configure firewalld. When not set, skip firewalld task                                                    |
+| `firewalld_config_base`                   | false           | Install and configure firewalld. When not set, skip firewalld task                                                    |
 | `firewalld_allow_ports`                   | []              | List of ports to be allowed to pass through the firewall, e.g. 80/tcp, 53/udp, etc.                                   |
 | `firewalld_allow_services`                | []              | List of services to be allowed to pass through the firewall, e.g. http, dns, etc.(1)                                  |
 | `firewalld_allow_rules`                   | []              | List of allowed rich rules, see https://docs.ansible.com/ansible/latest/modules/firewalld_module.html                 |
@@ -116,6 +116,30 @@ No specific requirements
 | `rhbase_start_services`                   | []              | List of services that should be running and enabled.                                                                  |
 | `rhbase_stop_services`                    | []              | List of services that should **not** be running                                                                       |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+
+## Role Variables (Debian Specific)
+
+| Variable                                  | Default         | Comment                                                                                                               |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Install task                                                                                                                                                                        |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `debbase_package_proxy`                   |                 | Proxy for download packages                                                                                           |
+| `debbase_install_packages`                | []              | List of packages that should be installed. URLs are also allowed.                                                     |
+| `debbase_remove_packages`                 | []              | List of packages that should **not** be installed                                                                     |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Config role                                                                                                                                                                         |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Security task                                                                                                                                                                       |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `selinux_config_debbase`                  | false           | Install and configure SELinux on RedHat-based Linux. When not set, skip SELinux task                                  |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| Service task                                                                                                                                                                        |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+| `debbase_start_services`                  | []              | List of services that should be running and enabled.                                                                  |
+| `debbase_stop_services`                   | []              | List of services that should **not** be running                                                                       |
+|:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
+
 
 **Remarks:**
 

@@ -87,7 +87,7 @@
 - name: Install | Ensure specified packages are installed
   package:
     name: "{{ rhbase_install_packages }}"
-    state: installed
+    state: present
   tags:
     - base
     - install

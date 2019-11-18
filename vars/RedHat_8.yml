@@ -1,5 +1,6 @@
 # RedHat 8
 python_sys_version: "3"
+python_sys_pip: "pip{{ python_sys_version }}"
 
 rhbase_dependencies:
   - sudo

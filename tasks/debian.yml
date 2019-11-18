@@ -1,0 +1,8 @@
+---
+- include_tasks: debian-defaults.yml      # Default values
+- include_tasks: debian-install.yml       # Install repositories and packages
+#- include_tasks: debian-config.yml        # Configuration (/etc/)
+#- include_tasks: debian-auto-updates.yml  # Automatic updates
+#  when: automatic_updates
+- include_tasks: debian-services.yml       # Enable/Disable base servises
+
