@@ -1,5 +1,6 @@
 # Fedora
 python_sys_version: "3"
+python_sys_pip: "pip{{ python_sys_version }}"
 
 rhbase_systemd_services:
   - systemd-journald
@@ -8,6 +9,9 @@ rhbase_systemd_services:
 
 dependencies_base:
   - sudo
+  - python{{ python_sys_version }}-pip
+
+selinux_config_rhbase: true
 
 dependencies_selinux:
   - selinux-policy

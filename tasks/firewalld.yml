@@ -1,7 +1,7 @@
 # Basic firewalld settings
 ---
 
-- name: Install | Role/Ansible dependencies
+- name: Firewalld | Role/Ansible dependencies
   package:
     name: "{{ dependencies_firewalld }}"
     state: present

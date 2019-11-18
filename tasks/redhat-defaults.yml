@@ -1,0 +1,12 @@
+# Set defaults for RedHat
+---
+
+- include_vars: rhbase.yml
+  when: ansible_os_family|lower in [ 'redhat', 'fedora' ]
+
+- include_vars: "{{ ansible_os_family }}_8.yml"
+  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7
+
+- name: Check for Enable SELinux config (RedHat)
+  set_fact:
+    selinux_config_base: "{{ selinux_config_rhbase | default(false) }}"

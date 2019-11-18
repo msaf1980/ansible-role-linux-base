@@ -1,39 +1,31 @@
 ---
 
-- include_vars: "{{ item }}"
-  with_first_found:
-    - "{{ ansible_distribution }}.yml"
-    - "{{ ansible_os_family }}.yml"
-  tags: base
-
-- include_vars: "{{ ansible_os_family }}_8.yml"
-  when: ansible_os_family == 'RedHat' and ansible_distribution_major_version|int > 7
-
-- include_vars: rhbase.yml
-  when: ansible_os_family|lower in [ 'redhat', 'fedora' ]
-
-- name: Check for Enable SELinux config (RedHat)
-  set_fact:
-    selinux_config_base: "{{ selinux_config_rhbase | default(false) }}"
-  when: ansible_os_family|lower in [ 'redhat', 'fedora' ]
-
-- name: Disable firewalld config
-  set_fact:
-    firewalld_config_base: false
-  when: not firewalld_config_base is defined
+- include_tasks: defaults.yml    # Default values
 
 - include_tasks: redhat.yml
   when: ansible_os_family|lower == 'redhat'
 
+- include_tasks: debian.yml
+  when: ansible_os_family|lower == 'debian'
+
+# Generic tasks
 - include_tasks: config.yml    # Configuration (/etc/)
 - include_tasks: logging.yml   # Configure logging/crashdumps/etc
-- include_tasks: services.yml  # Start/stop basic services
 - include_tasks: selinux.yml  # SELinux settings
   when: selinux_config_base
 - include_tasks: admin.yml     # Admin settings (a.o. sudo, etc)
 - include_tasks: sshd.yml      # OpenSSHD settings
 - include_tasks: firewalld.yml # Firewalld settings
-  when: firewalld_config_base
+  when:
+    - firewalld_config_base
+    - ansible_os_family|lower == 'redhat'
 
 - include_tasks: redhat-reboot.yml
   when: ansible_os_family|lower == 'redhat'
+
+- name: "reboot needed"
+  debug: 
+    msg: "{{ inventory_hostname }} need reboot"
+  when: reboot_needed | default(false)
+  tags:
+    - base

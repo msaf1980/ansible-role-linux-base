@@ -72,3 +72,14 @@ rhbase_start_services: []
 rhbase_stop_services: []
 
 ################################################################
+# Debian-based variables (Debian, Ubuntu)
+
+# Package management
+debbase_install_packages: []
+debbase_remove_packages: []
+
+# Services
+debbase_start_services: []
+debbase_stop_services: []
+
+################################################################

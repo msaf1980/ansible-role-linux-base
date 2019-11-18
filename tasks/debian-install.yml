@@ -1,0 +1,67 @@
+# Install custom repositories and packages. Repositories should be installed
+# using an RPM package. A list of URLs to the RPMs for these repositories
+# should be specified in group_vars or host_vars.
+---
+
+- name: Install | Ensure the machine-ID is available
+  command: systemd-machine-id-setup
+  args:
+    creates: /etc/machine-id
+  tags: base
+
+#- name: Install | Package management configuration ({{ rhbase_package_manager }})
+#  template:
+#    src: "etc_{{ rhbase_package_manager }}.conf.j2"
+#    dest: "{{ rhbase_package_manager_configuration }}"
+#    owner: root
+#    group: root
+#    mode: 0644
+#  tags:
+#    - base
+#    - install
+
+- name: Install | Role/Ansible dependencies
+  package:
+    name: "{{ dependencies_base }}"
+    state: present
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure basic systemd services are running
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  with_items: "{{ debbase_systemd_services }}"
+  tags: base
+
+# Configure repo
+
+#
+
+- name: Install | Ensure specified packages are installed
+  package:
+    name: "{{ debbase_install_packages }}"
+    state: installed
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure specified packages are NOT installed
+  package:
+    name: "{{ debbase_remove_packages }}"
+    state: absent
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure all updates are installed
+  package:
+    name: '*'
+    state: latest
+  when: update_on_install
+  tags:
+    - base
+    - update
+    - install

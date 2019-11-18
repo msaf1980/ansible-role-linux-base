@@ -6,7 +6,7 @@
     name: "{{ item }}"
     enabled: true
     state: started
-  with_items: "{{ start_services }}"
+  with_items: "{{ debbase_start_services }}"
   tags:
     - base
     - services
@@ -16,7 +16,7 @@
     name: "{{ item }}"
     enabled: false
     state: stopped
-  with_items: "{{ stop_services }}"
+  with_items: "{{ debbase_stop_services }}"
   tags:
     - base
     - services

@@ -1,0 +1,6 @@
+# Set defaults for Debian
+---
+
+- name: Check for Enable SELinux config (Debian)
+  set_fact:
+    selinux_config_base: "{{ selinux_config_debbase | default(false) }}"

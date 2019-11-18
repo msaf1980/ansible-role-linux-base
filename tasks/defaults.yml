@@ -1,0 +1,16 @@
+# Set defaults (generic)
+---
+
+- include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags: base
+
+- include_vars: debbase.yml
+  when:  ansible_distribution|lower in [ 'debian', 'ubuntu' ]
+
+- name: Disable firewalld config
+  set_fact:
+    firewalld_config_base: false
+  when: not firewalld_config_base is defined
