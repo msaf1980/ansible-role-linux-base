@@ -26,6 +26,7 @@ No specific requirements
 | Install role                                                                                                                                                                        |
 |:------------------------------------------|:----------------|:----------------------------------------------------------------------------------------------------------------------|
 | `automatic_updates`                       | false           | When set, automatic updates will be configured (yum-cron or dnf-automatic, as appropriate). See `rhbase_updates_*`    |
+| `pip_sys_install`                         | true            | When set, install pip for system python                                                                               |
 | `update_on_install`                       | false           | When set, update packages (yum or dnf). See `rhbase_updates_*`                                                        |
 | `automatic_reboot`                        | false           | When set, run automatic reboot if needed                                                                              |
 | `reboot_check`                            | true            | When set, run check if reboot needed after update                                                                     |

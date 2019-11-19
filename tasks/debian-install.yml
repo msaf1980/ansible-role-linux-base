@@ -46,6 +46,15 @@
     - base
     - install
 
+- name: Install | Pip dependencies
+  package:
+    name: "{{ dependencies_pip }}"
+    state: present
+  when: pip_sys_install
+  tags:
+    - base
+    - install
+
 - name: Install | Ensure basic systemd services are running
   service:
     name: "{{ item }}"

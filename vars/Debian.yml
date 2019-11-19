@@ -10,6 +10,8 @@ debbase_systemd_services:
 dependencies_base:
   - sudo
   - aptitude
+
+dependencies_pip:
   - python{{ python_sys_version }}-pip
 
 selinux_config_debbase: false

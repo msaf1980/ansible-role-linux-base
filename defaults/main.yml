@@ -29,6 +29,9 @@ firewalld_remove_rules: []
 selinux_state: enforcing
 selinux_booleans: []
 
+# Package management
+pip_sys_install: false
+
 ################################################################
 # RedHat-based variables (RHEL, CentOS, OracleLinux, Fedora)
 

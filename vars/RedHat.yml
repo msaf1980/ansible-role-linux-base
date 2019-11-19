@@ -9,6 +9,8 @@ rhbase_systemd_services:
 
 dependencies_base:
   - sudo
+
+dependencies_pip:
   - python{{ python_sys_version }}-pip
 
 selinux_config_rhbase: true
