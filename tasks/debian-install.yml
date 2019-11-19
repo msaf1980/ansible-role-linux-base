@@ -23,6 +23,7 @@
     dest: "/etc/apt/apt.conf.d/proxy.conf"
     line: "{{ item.value }}"
     state: present
+    create: yes
     regexp: "{{ item.regexp }}"
   with_items:
     - { regexp: '^Acquire::http::Proxy[ \t]', value: 'Acquire::http::Proxy "{{ debbase_package_proxy }}";' }
