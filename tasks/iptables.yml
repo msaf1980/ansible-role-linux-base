@@ -1,6 +1,7 @@
 # Switch to iptables-legacy due to bugs in RedHat 8, Debian 10
 # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=914694
 # https://bugzilla.redhat.com/show_bug.cgi?id=1664829
+# If want use firewalld, switch it to nftables backend
 
 - name: Iptables | Select iptables backend
   set_fact:

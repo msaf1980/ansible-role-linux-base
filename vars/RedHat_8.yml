@@ -4,6 +4,7 @@ python_sys_pip: "pip{{ python_sys_version }}"
 
 dependencies_base:
   - sudo
+  - nftables
   - iptables
 
 dependencies_pip:
@@ -21,6 +22,8 @@ dependencies_selinux:
 dependencies_firewalld:
   - firewalld
   - python{{ python_sys_version }}-firewall
+
+firewalld_backend: "nftables"
 
 # Package management
 rhbase_package_manager: dnf

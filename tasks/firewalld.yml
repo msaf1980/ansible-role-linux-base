@@ -7,7 +7,19 @@
     state: present
   tags:
     - base
-    - install
+    - security
+    - firewall
+
+- name: Firewalld | Configure backend {{ firewalld_backend }}
+  lineinfile:
+    dest: "/etc/firewalld/firewalld.conf"
+    line: "FirewallBackend={{ firewalld_backend }}"
+    regexp: "^FirewallBackend="
+  when: firewalld_backend is defined
+  tags:
+    - base
+    - security
+    - firewall
 
 - name: Firewalld | Make sure the firewall is running
   service:

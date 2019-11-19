@@ -2,5 +2,8 @@
 dependencies_base:
   - sudo
   - aptitude
+  - nftables
   - ebtables
   - arptables
+
+firewalld_backend: "nftables"
