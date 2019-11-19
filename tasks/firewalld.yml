@@ -24,6 +24,7 @@
     service: "{{ item }}"
     permanent: true
     state: enabled
+    zone: "public"
   with_items:
     - dhcpv6-client
     - ssh
@@ -39,6 +40,7 @@
     service: "{{ item }}"
     permanent: true
     state: enabled
+    zone: "public"
   with_items: "{{ firewalld_allow_services }}"
   notify:
     - restart firewalld
@@ -52,6 +54,7 @@
     port: "{{ item }}"
     permanent: true
     state: enabled
+    zone: "public"
   with_items: "{{ firewalld_allow_ports }}"
   notify:
     - restart firewalld
@@ -65,6 +68,7 @@
     rich_rule: "{{ item }}"
     permanent: true
     state: enabled
+    zone: "public"
   with_items: "{{ firewalld_allow_rules }}"
   notify:
     - restart firewalld
@@ -78,6 +82,7 @@
     service: "{{ item }}"
     permanent: true
     state: disabled
+    zone: "public"
   with_items: "{{ firewalld_remove_services }}"
   notify:
     - restart firewalld
@@ -91,6 +96,7 @@
     port: "{{ item }}"
     permanent: true
     state: disabled
+    zone: "public"
   with_items: "{{ firewalld_remove_ports }}"
   notify:
     - restart firewalld
@@ -104,6 +110,7 @@
     rich_rule: "{{ item }}"
     permanent: true
     state: disabled
+    zone: "public"
   with_items: "{{ firewalld_remove_rules }}"
   notify:
     - restart firewalld
