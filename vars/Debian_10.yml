@@ -1,0 +1,6 @@
+# Debian
+dependencies_base:
+  - sudo
+  - aptitude
+  - ebtables
+  - arptables

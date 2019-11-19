@@ -2,14 +2,23 @@
 python_sys_version: "3"
 python_sys_pip: "pip{{ python_sys_version }}"
 
-rhbase_dependencies:
+dependencies_base:
   - sudo
-  - systemd-udev
+  - iptables
+
+dependencies_pip:
+  - python{{ python_sys_version }}-pip
+
+selinux_config_rhbase: true
+
+dependencies_selinux:
   - selinux-policy
   - policycoreutils
+  - policycoreutils-python-utils
   - libselinux-python{{ python_sys_version }}
   - libsemanage-python{{ python_sys_version }}
-  - systemd-udev
+
+dependencies_firewalld:
   - firewalld
   - python{{ python_sys_version }}-firewall
 

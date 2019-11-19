@@ -9,6 +9,7 @@ rhbase_systemd_services:
 
 dependencies_base:
   - sudo
+  - iptables
 
 dependencies_pip:
   - python{{ python_sys_version }}-pip
@@ -18,6 +19,7 @@ selinux_config_rhbase: true
 dependencies_selinux:
   - selinux-policy
   - policycoreutils
+  - policycoreutils-python
   - libselinux-python{{ python_sys_version }}
   - libsemanage-python{{ python_sys_version }}
 

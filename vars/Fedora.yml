@@ -17,6 +17,7 @@ selinux_config_rhbase: true
 dependencies_selinux:
   - selinux-policy
   - policycoreutils
+  - policycoreutils-python-utils
   - libselinux-python{{ python_sys_version }}
   - libsemanage-python{{ python_sys_version }}
 

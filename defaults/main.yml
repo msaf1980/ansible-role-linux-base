@@ -18,6 +18,19 @@ admin_group: "wheel"
 su_wheel_only: false
 sudo_wheel_nopasswd: true
 
+# Iptables
+iptables_nft:
+  - { name: "iptables", path: "/usr/sbin/iptables-nft" }
+  - { name: "ip6tables", path: "/usr/sbin/ip6tables-nft" }
+  - { name: "arptables", path: "/usr/sbin/arptables-nft" }
+  - { name: "ebtables", path: "/usr/sbin/ebtables-nft" }
+
+iptables_legacy:
+  - { name: "iptables", path: "/usr/sbin/iptables-legacy" }
+  - { name: "ip6tables", path: "/usr/sbin/ip6tables-legacy" }
+  - { name: "arptables", path: "/usr/sbin/arptables-legacy" }
+  - { name: "ebtables", path: "/usr/sbin/ebtables-legacy" }
+
 # Firewalld
 firewalld_allow_services: []
 firewalld_allow_ports: []
