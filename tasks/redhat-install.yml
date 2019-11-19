@@ -13,9 +13,9 @@
   template:
     src: "etc_{{ rhbase_package_manager }}.conf.j2"
     dest: "{{ rhbase_package_manager_configuration }}"
-    owner: root
-    group: root
-    mode: 0644
+    owner: "root"
+    group: "{{ admin_group }}"
+    mode: 0640
   tags:
     - base
     - install

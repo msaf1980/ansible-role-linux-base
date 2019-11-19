@@ -24,6 +24,9 @@
     line: "{{ item.value }}"
     state: present
     create: yes
+    owner: "root"
+    group: "{{ admin_group }}"
+    mode: 0640
     regexp: "{{ item.regexp }}"
   with_items:
     - { regexp: '^Acquire::http::Proxy[ \t]', value: 'Acquire::http::Proxy "{{ debbase_package_proxy }}";' }
