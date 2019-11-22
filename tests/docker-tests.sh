@@ -14,10 +14,12 @@
 #
 # EXAMPLES
 #
-# $ DISTRIBUTION=centos VERSION=7 ROLE=msaf1980.squid ./tests/docker-tests.sh
-# $ DISTRIBUTION=debian VERSION=9 ROLE=msaf1980.squid ./tests/docker-tests.sh
-# $ DISTRIBUTION=ubuntu VERSION=18.04 ROLE=msaf1980.squid ./tests/docker-tests.sh
+# $ DISTRIBUTION=centos VERSION=7 ./tests/docker-tests.sh
+# $ DISTRIBUTION=debian VERSION=9 ./tests/docker-tests.sh
+# $ DISTRIBUTION=ubuntu VERSION=18.04 ./tests/docker-tests.sh
 #
+
+readonly ROLE="msaf1980.linux-base"
 
 [ -z "${1}" ] && opt="" || opt="${1}"
 

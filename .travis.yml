@@ -33,4 +33,4 @@ before_install:
   - sudo apt-get install --only-upgrade git
   - sudo apt-get install python-pip || sudo apt-get install python3-pip
 script:
-  - ROLE=msaf1980.linux-base ./tests/docker-tests.sh --no-firewalld
+  - ./tests/docker-tests.sh --no-firewalld
