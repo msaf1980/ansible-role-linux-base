@@ -16,11 +16,14 @@ dependencies_pip:
 
 selinux_config_debbase: false
 
-#dependencies_selinux:
-#  - selinux-policy
-#  - policycoreutils
-#  - libselinux-python{{ python_sys_version }}
-#  - libsemanage-python{{ python_sys_version }}
+dependencies_selinux:
+  - selinux-basics
+  - selinux-policy-default
+  - selinux-utils
+  - auditd
+  - policycoreutils
+  - python{{ python_sys_version }}-sepolicy
+  - python-semanage
 
 dependencies_firewalld:
   - firewalld
