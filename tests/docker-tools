@@ -63,7 +63,7 @@ id=""
 id_file=""
 
 roles_dir='/etc/ansible/roles/role_under_test'
-role_dir="${roles_dir}/${ROLE}"
+role_dir="${roles_dir}/role_under_test"
 test_playbook="tests/test.yml"
 
 readonly docker_image="msaf1980/ansible-testing"
@@ -124,7 +124,7 @@ start_container() {
   set -x
   docker run --detach \
     "${run_opts[@]}" \
-    --volume="${PWD}:${roles_dir}/${ROLE}:ro" \
+    --volume="${PWD}:${role_dir}:ro" \
     "${image_tag}" \
     "${init}" \
     > "${id_file}"
