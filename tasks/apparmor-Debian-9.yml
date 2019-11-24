@@ -1,0 +1,44 @@
+---
+
+- name: Apparmor | Install system-wide dependences
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - auditd
+    - apparmor
+    - apparmor-profiles
+    - apparmor-profiles-extra
+
+- name: "Enable apparmor in grub configuration"
+  lineinfile:
+    line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet security=apparmor"'
+    regexp: "^GRUB_CMDLINE_LINUX_DEFAULT=.*"
+    state: present
+    path: /etc/default/grub
+  register: grub_cmdline
+
+- name: "Re-generate grub configuration"
+  shell: update-grub
+  when: grub_cmdline.changed
+
+- name: Reboot | set reboot_needed
+  set_fact:
+    reboot_needed: true
+  when:
+    - grub_cmdline.changed
+    - automatic_reboot
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Apparmor | Enable services
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  when: grub_cmdline.changed or auditd.changed
+  with_items:
+    - apparmor
+    - auditd

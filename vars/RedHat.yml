@@ -14,7 +14,7 @@ dependencies_base:
 dependencies_pip:
   - python{{ python_sys_version }}-pip
 
-selinux_config_rhbase: true
+selinux_config_base: true
 
 dependencies_selinux:
   - selinux-policy

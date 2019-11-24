@@ -1,0 +1,22 @@
+- name: Reboot | install own version of 'needs-restarting'
+  template: src="redhat-needs-restarting.py.j2" dest=/root/needs-restarting.py mode=0700
+
+- name: Reboot | Reboot required (Red Hat) - Step 1
+  shell: "/root/needs-restarting.py -r"
+  register: reboot_required
+  ignore_errors: True
+  changed_when: False
+  when: ansible_distribution_major_version|int < 8 # not work on RedHat 8
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Reboot | set reboot_needed
+  set_fact:
+    reboot_needed: true
+  when: reboot_required.rc is defined and reboot_required.rc == 1 and reboot_check
+  tags:
+    - base
+    - install
+    - updates

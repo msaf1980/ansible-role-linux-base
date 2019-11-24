@@ -17,4 +17,6 @@ dependencies_pip:
 dependencies_firewalld:
   - firewalld
 
+apparmor_config_base: true
+
 # Package management

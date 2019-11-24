@@ -3,7 +3,6 @@
   roles:
     - msaf1980.linux-base
   vars:
-    - selinux_config_base: true
     - firewalld_config_base: true
     - automatic_updates: true
     - update_on_install: true
@@ -13,7 +12,8 @@
     - sshd_passwordauthentication: 'no'
     - sshd_maxauthtries: 2
     - rhbase_install_packages: [ 'man', 'lsscsi', 'sysstat' ]
-    - hbase_repo_gpgcheck: false
+    - debbase_install_packages: [ 'man', 'lsscsi', 'sysstat' ]
+    - apparmor_config_debbase: false
     - users:
         - username: msv
         - groups: [ 'wheel' ]

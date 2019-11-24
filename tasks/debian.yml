@@ -5,4 +5,6 @@
 #- include_tasks: debian-auto-updates.yml  # Automatic updates
 #  when: automatic_updates
 - include_tasks: debian-services.yml       # Enable/Disable base servises
-
+- include_tasks: debian-apparmor.yml       # Enable Apparmor
+  when:
+    - apparmor_config_base | default(false)

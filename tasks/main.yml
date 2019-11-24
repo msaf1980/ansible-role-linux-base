@@ -19,13 +19,17 @@
 - include_tasks: firewalld.yml # Firewalld settings
   when:
     - firewalld_config_base
-    #- ansible_os_family|lower == 'redhat'
 
-- include_tasks: redhat-reboot.yml
+- include_tasks: redhat-check-reboot.yml
   when: ansible_os_family|lower == 'redhat'
 
+- include_tasks: reboot.yml
+  when:
+    - reboot_needed | default(false)
+    - automatic_reboot
+
 - name: "reboot needed"
-  debug: 
+  debug:
     msg: "{{ inventory_hostname }} need reboot"
   when: reboot_needed | default(false)
   tags:

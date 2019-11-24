@@ -14,3 +14,7 @@
   set_fact:
     firewalld_config_base: false
   when: not firewalld_config_base is defined
+
+- name: Reset reboot flag
+  set_fact:
+    reboot_needed: false

@@ -2,14 +2,34 @@
 ---
 
 - include_vars: "{{ ansible_distribution }}_9.yml"
-  when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int > 8
+  when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 9
 
 - include_vars: "{{ ansible_distribution }}_10.yml"
-  when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int > 9
+  when: ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 10
 
 - include_vars: "Debian_9.yml"
-  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int > 17
+  when: ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 18
+
+- set_fact:
+    apparmor_config_base: false
+
+- name: Default Apparmor config (Debian >= 9, Ubuntu >= 16)
+  set_fact:
+    apparmor_config_base: true
+  when: (ansible_distribution == 'Debian' and ansible_distribution_major_version|int >= 9) or
+        (ansible_distribution == 'Ubuntu' and ansible_distribution_major_version|int >= 16)
+
+- name: Check for Enable Apparmor config (Debian)
+  set_fact:
+    apparmor_config_base: "{{ apparmor_config_debbase }}"
+  when: apparmor_config_debbase is defined
+
+- name: Skip SELinux config (Debian)
+  set_fact:
+    selinux_config_debbase: false
+  when: apparmor_config_base
 
 - name: Check for Enable SELinux config (Debian)
   set_fact:
-    selinux_config_base: "{{ selinux_config_debbase | default(false) }}"
+    selinux_config_base: "{{ selinux_config_debbase }}"
+  when: selinux_config_debbase is defined

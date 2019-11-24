@@ -5,3 +5,6 @@
   vars:
     # Disable reboot check
     - reboot_check: false
+    - rhbase_install_packages: [ 'man', 'lsscsi', 'sysstat' ]
+    - debbase_install_packages: [ 'man', 'lsscsi', 'sysstat' ]
+    - apparmor_config_debbase: false

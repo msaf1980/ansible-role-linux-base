@@ -1,0 +1,48 @@
+- name: Reboot required (Red Hat) - Step 2
+  shell: ( /bin/sleep 5 ; shutdown -r now "Ansible updates triggered" ) &
+  async: 30
+  poll: 0
+  when: reboot_needed | default(false)
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Wait for the reboot to complete
+  wait_for_connection:
+    connect_timeout: 20
+    sleep: 5
+    delay: 5
+    timeout: 300
+  when: reboot_needed | default(false)
+  tags:
+    - base
+    - install
+    - updates
+
+- name: Post login
+  shell: "hostname"
+  register: out
+  when: reboot_needed | default(false)
+  tags:
+    - base
+    - install
+    - updates
+
+- name: "hostname out"
+  debug:
+    msg: "{{ out.stdout.split('\n') }}"
+  when: reboot_needed | default(false)
+  tags:
+    - base
+    - install
+    - updates
+
+- name: "reset reboot_needed"
+  set_fact:
+    reboot_needed: false
+  when: reboot_needed | default(false)
+  tags:
+    - base
+    - install
+    - updates

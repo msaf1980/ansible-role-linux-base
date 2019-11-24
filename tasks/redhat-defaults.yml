@@ -12,4 +12,5 @@
 
 - name: Check for Enable SELinux config (RedHat)
   set_fact:
-    selinux_config_base: "{{ selinux_config_rhbase | default(false) }}"
+    selinux_config_base: "{{ selinux_config_rhbase }}"
+  when: selinux_config_rhbase is defined

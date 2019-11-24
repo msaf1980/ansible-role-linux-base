@@ -1,0 +1,20 @@
+---
+
+- name: Apparmor | Install system-wide dependences
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - auditd
+    - apparmor
+    - apparmor-profiles
+    - apparmor-profiles-extra
+
+- name: Apparmor | Enable services
+  systemd:
+    name: "{{ item }}"
+    state: started
+    enabled: yes
+  with_items:
+    - apparmor
+    - auditd
