@@ -30,6 +30,7 @@ firewalld_zones: []
 # SELinux
 selinux_state: enforcing
 selinux_booleans: []
+selinux_seports: []
 
 # Package management
 pip_sys_install: false

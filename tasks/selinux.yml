@@ -25,5 +25,13 @@
   with_items: "{{ selinux_booleans }}"
   when: selinux_state == 'enforcing' or selinux_state == 'permissive'
   tags:
-    - rhbase
+    - base
     - security
+
+- name: SELinux | Allow ports
+  seport:
+    ports: "{{ item.ports }}"
+    proto: "{{ item.proto }}"
+    setype: "{{ item.setype }}"
+    state: "{{ item.state }}"
+  with_items: "{{ selinux_seports }}"

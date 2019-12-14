@@ -20,6 +20,7 @@ dependencies_selinux:
   - policycoreutils-python-utils
   - libselinux-python{{ python_sys_version }}
   - libsemanage-python{{ python_sys_version }}
+  - setools-console
 
 dependencies_firewalld:
   - firewalld
