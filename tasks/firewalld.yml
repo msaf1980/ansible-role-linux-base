@@ -15,6 +15,8 @@
     dest: "/etc/firewalld/firewalld.conf"
     line: "FirewallBackend={{ firewalld_backend }}"
     regexp: "^FirewallBackend="
+  notify:
+    - restart firewalld
   when: firewalld_backend is defined
   tags:
     - base
