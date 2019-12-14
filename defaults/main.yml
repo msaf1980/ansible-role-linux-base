@@ -25,6 +25,7 @@ firewalld_allow_rules: []
 firewalld_remove_services: []
 firewalld_remove_ports: []
 firewalld_remove_rules: []
+firewalld_zones: []
 
 # SELinux
 selinux_state: enforcing
