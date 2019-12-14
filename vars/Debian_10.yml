@@ -5,5 +5,3 @@ dependencies_base:
   - nftables
   - ebtables
   - arptables
-
-firewalld_backend: "nftables"

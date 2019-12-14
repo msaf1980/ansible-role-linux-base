@@ -23,8 +23,6 @@ dependencies_firewalld:
   - firewalld
   - python{{ python_sys_version }}-firewall
 
-firewalld_backend: "nftables"
-
 # Package management
 rhbase_package_manager: dnf
 rhbase_package_manager_configuration: /etc/dnf/dnf.conf
