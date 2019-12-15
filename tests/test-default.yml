@@ -2,6 +2,8 @@
 - hosts: all
   roles:
     - role_under_test
+  vars:
+    - apparmor_config_debbase: false
 
 
 
