@@ -118,3 +118,21 @@
     - base
     - update
     - install
+
+- name: Install | Ensure specified pip packages are installed
+  pip:
+    executable: "{{ python_sys_pip }}"
+    name: "{{ rhbase_pip_install_packages }}"
+    state: present
+  tags:
+    - base
+    - install
+
+- name: Install | Ensure specified pip packages are NOT installed
+  pip:
+    executable: "{{ python_sys_pip }}"
+    name: "{{ rhbase_pip_remove_packages }}"
+    state: absent
+  tags:
+    - base
+    - instal

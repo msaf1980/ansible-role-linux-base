@@ -45,6 +45,8 @@ rhbase_disable_repos: []
 rhbase_disable_all_repos: []
 rhbase_install_packages: []
 rhbase_remove_packages: []
+rhbase_pip_install_packages: []
+rhbase_pip_remove_packages: []
 rhbase_repo_exclude: []
 rhbase_repo_installonly_limit: 3
 rhbase_repo_gpgcheck: true
@@ -83,6 +85,8 @@ rhbase_stop_services: []
 # Package management
 debbase_install_packages: []
 debbase_remove_packages: []
+debbase_pip_install_packages: []
+debbase_pip_remove_packages: []
 
 # Services
 debbase_start_services: []

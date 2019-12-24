@@ -1,5 +1,6 @@
 ---
 - include_tasks: debian-defaults.yml      # Default values
+- include_tasks: pip-config.yml           # Configure pip
 - include_tasks: debian-install.yml       # Install repositories and packages
 #- include_tasks: debian-config.yml        # Configuration (/etc/)
 #- include_tasks: debian-auto-updates.yml  # Automatic updates

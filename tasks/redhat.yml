@@ -1,5 +1,6 @@
 ---
 - include_tasks: redhat-defaults.yml      # Default values
+- include_tasks: pip-config.yml           # Configure pip
 - include_tasks: redhat-install.yml       # Install repositories and packages
 - include_tasks: redhat-config.yml        # Configuration (/etc/)
 - include_tasks: redhat-auto-updates.yml  # Automatic updates
