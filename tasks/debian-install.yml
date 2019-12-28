@@ -102,6 +102,7 @@
     executable: "{{ python_sys_pip }}"
     name: "{{ debbase_pip_install_packages }}"
     state: present
+  when: debbase_pip_install_packages | length > 0
   tags:
     - base
     - install
@@ -111,6 +112,7 @@
     executable: "{{ python_sys_pip }}"
     name: "{{ debbase_pip_remove_packages }}"
     state: absent
+  when: debbase_pip_remove_packages | length > 0
   tags:
     - base
     - install
