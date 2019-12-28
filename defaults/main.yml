@@ -18,15 +18,6 @@ admin_group: "wheel"
 su_wheel_only: false
 sudo_wheel_nopasswd: true
 
-# Firewalld
-firewalld_allow_services: []
-firewalld_allow_ports: []
-firewalld_allow_rules: []
-firewalld_remove_services: []
-firewalld_remove_ports: []
-firewalld_remove_rules: []
-firewalld_zones: []
-
 # SELinux
 selinux_state: enforcing
 selinux_booleans: []

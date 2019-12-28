@@ -11,6 +11,11 @@
     name: firewalld
     state: restarted
 
+- name: reload firewalld
+  service:
+    name: firewalld
+    state: reloaded
+
 - name: restart updates
   service:
     name: "{{ rhbase_updates_service }}"
