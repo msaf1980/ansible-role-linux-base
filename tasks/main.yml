@@ -15,7 +15,8 @@
   when: selinux_config_base
 - include_tasks: admin.yml     # Admin settings (a.o. sudo, etc)
 - include_tasks: sshd.yml      # OpenSSHD settings
-- include_tasks: iptables.yml  # Base config for iptables (select backend)
+- include_tasks: iptables-settings.yml  # Base config for iptables (select backend)
+- include_tasks: modprobe.yml  # Load modules
 - include_tasks: firewalld.yml # Firewalld settings
   when:
     - firewalld_config_base
