@@ -4,6 +4,7 @@
     state: present
     params: "{{ item.param | default(omit) }}"
   with_items: "{{ modprobe }}"
+  when: modprobe is defined
   tags:
     - base
     - modprobe
